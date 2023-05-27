@@ -4,14 +4,17 @@ import {
   Toolbar,
   Typography,
   Button,
-  IconButton,
   Menu,
+  MenuList,
   MenuItem,
   TextField,
   Box,
+  ListItemIcon,
+  ListItemText,
 } from "@mui/material";
-import { ArrowDropDown, ShoppingCart } from "@mui/icons-material";
+import { RiArrowDropDownLine, RiShoppingCart2Fill } from "react-icons/ri";
 import SearchBar from "../components/SearcBar/SearchBar";
+import CustomButton from "../components/ui/CustomButton";
 
 const Header: React.FC = () => {
   const [anchorCategories, setAnchorCategories] =
@@ -47,22 +50,27 @@ const Header: React.FC = () => {
   };
 
   return (
-    <AppBar position="static" color="primary">
+    <AppBar
+      position="static"
+      sx={{ backgroundColor: "#2E2E2E" }}
+      className="p-2"
+    >
       <Toolbar className="flex justify-between">
-        <div className="flex items-center">
+        <div className="flex items-center space-x-6">
           <Typography variant="h6" component="div">
             Logo
           </Typography>
 
-          <Button
-            color="inherit"
+          <CustomButton
+            variant="contained"
             onClick={handleCategoriesMenuOpen}
-            endIcon={<ArrowDropDown />}
+            endIcon={<RiArrowDropDownLine />}
             aria-haspopup="true"
             aria-controls="categories-menu"
+            className="uppercase"
           >
             Kategoriler
-          </Button>
+          </CustomButton>
           <Menu
             id="categories-menu"
             anchorEl={anchorCategories}
@@ -105,20 +113,24 @@ const Header: React.FC = () => {
           </Menu>
         </div>
 
-        <div className="flex-1 max-w-lg py-2">
+        <div className="flex-1 max-w-lg ">
           <SearchBar />
         </div>
 
-        <div className="flex items-center">
-          <Button
-            color="inherit"
+        <div className="flex items-center space-x-6">
+          <CustomButton
+            variant="contained"
             onClick={handleAccountMenuOpen}
-            endIcon={<ArrowDropDown />}
+            className="uppercase space-x-2"
+            endIcon={<RiArrowDropDownLine className="w-6 h-6" />}
             aria-haspopup="true"
             aria-controls="account-menu"
           >
-            Giriş / Kayıt Ol
-          </Button>
+            <div className="flex flex-col items-center justify-center">
+              <p>Giriş / Kayıt ol</p>
+              <span className="text-xs text-gray-300 ">Hesap Ayarları</span>
+            </div>
+          </CustomButton>
           <Menu
             id="account-menu"
             anchorEl={anchorAccount}
@@ -132,14 +144,47 @@ const Header: React.FC = () => {
               vertical: "top",
               horizontal: "center",
             }}
+            sx={{ marginTop: "3px" }}
+            PaperProps={{
+              sx: {
+                backgroundColor: "#2D3142",
+                color: "#fff",
+              },
+            }}
           >
-            <MenuItem onClick={handleAccountMenuClose}>Giriş</MenuItem>
-            <MenuItem onClick={handleAccountMenuClose}>Kayıt Ol</MenuItem>
+            <MenuList dense sx={{ width: 160, maxWidth: "100%" }}>
+              <MenuItem onClick={handleAccountMenuClose}>
+                <ListItemText>Giriş Yap</ListItemText>
+              </MenuItem>
+              <MenuItem onClick={handleAccountMenuClose}>
+                <ListItemText>Kayıt Ol</ListItemText>
+              </MenuItem>
+              <MenuItem onClick={handleAccountMenuClose}>
+                <ListItemText>Siparişlerim</ListItemText>
+              </MenuItem>
+              <MenuItem onClick={handleAccountMenuClose}>
+                <ListItemText>Üyelik Bilgilerim</ListItemText>
+              </MenuItem>
+            </MenuList>
           </Menu>
 
-          <Button color="inherit" className="space-x-2">
+          <Button
+            variant="outlined"
+            size="large"
+            className="space-x-2 uppercase "
+            sx={{
+              textTransform: "none",
+              borderColor: "#F8F8F8",
+              color: "#fff",
+              ":hover": {
+                borderColor: "#F8F8F8",
+                backgroundColor: "#F8F8F8",
+                color: "#2D3142",
+              },
+            }}
+          >
             <p>Sepetim</p>
-            <ShoppingCart />
+            <RiShoppingCart2Fill />
           </Button>
         </div>
       </Toolbar>

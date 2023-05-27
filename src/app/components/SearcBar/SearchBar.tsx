@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
+import { FaSearch } from "react-icons/fa";
 import axios from "axios";
+import { TextField } from "@mui/material";
 
 interface Product {
   id: number;
@@ -45,20 +45,23 @@ const SearchBar: React.FC = () => {
     <Autocomplete
       key="autocomplete"
       options={options}
+      className="m-0 p-2"
       getOptionLabel={(option) =>
         option.name ? option.name : "Ürün Bulunamadı"
       }
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Search"
+          placeholder="Search"
           variant="outlined"
+          className="bg-white"
+          size="small"
           onChange={handleSearch}
           InputProps={{
             ...params.InputProps,
             startAdornment: (
               <>
-                <SearchIcon />
+                <FaSearch />
                 {params.InputProps.startAdornment}
               </>
             ),
