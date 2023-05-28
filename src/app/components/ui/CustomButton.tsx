@@ -12,7 +12,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ className, ...props }) => {
 
   return (
     <Button
-      className={clsx("text-white  hover:bg-opacity-75", className)}
+      className={clsx("text-white uppercase hover:bg-opacity-75", className)}
       sx={{
         backgroundColor: primaryColor,
         textTransform: "none",

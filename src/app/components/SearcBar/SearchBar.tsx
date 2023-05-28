@@ -45,7 +45,7 @@ const SearchBar: React.FC = () => {
     <Autocomplete
       key="autocomplete"
       options={options}
-      className="m-0 p-2"
+      className="m-0 p-2 w-full"
       getOptionLabel={(option) =>
         option.name ? option.name : "Ürün Bulunamadı"
       }
@@ -55,6 +55,7 @@ const SearchBar: React.FC = () => {
           placeholder="Search"
           variant="outlined"
           className="bg-white"
+          sx={{ borderRadius: "0.5rem" }}
           size="small"
           onChange={handleSearch}
           InputProps={{
