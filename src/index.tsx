@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./app/layout/index.css";
+import "swiper/css";
 import reportWebVitals from "./reportWebVitals";
-import App from "./app/layout/App";
 import { RouterProvider } from "react-router";
 import { router } from "./app/router/Routes";
 

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-gray-300 py-8 flex-shrink-0 mt-auto shadow-2xl">
+    <footer className="bg-[#2E2E2E] text-gray-300 py-8 flex-shrink-0 mt-auto shadow-2xl">
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6} md={3}>
