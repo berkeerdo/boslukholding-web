@@ -1,7 +1,9 @@
+import ImageSlider from "../../app/components/ui/ImageSlider";
+
 export default function HomePage() {
   return (
     <div>
-      <h1>Home Page</h1>
+      <ImageSlider />
     </div>
   );
 }

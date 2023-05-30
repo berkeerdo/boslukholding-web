@@ -7,7 +7,6 @@ import {
   Menu,
   MenuList,
   MenuItem,
-  TextField,
   Box,
   ListItemText,
   Divider,
@@ -22,13 +21,10 @@ import {
   RiArrowDropDownLine,
   RiCloseLine,
   RiMenu3Fill,
-  RiProductHuntFill,
-  RiShoppingBag2Fill,
   RiShoppingCart2Fill,
 } from "react-icons/ri";
 import SearchBar from "../components/SearcBar/SearchBar";
 import CustomButton from "../components/ui/CustomButton";
-import { is } from "@babel/types";
 
 const Header: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
