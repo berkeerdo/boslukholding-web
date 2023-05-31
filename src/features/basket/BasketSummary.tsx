@@ -1,10 +1,9 @@
 import {
-  TableContainer,
   Paper,
-  Table,
-  TableBody,
-  TableRow,
-  TableCell,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
 } from "@mui/material";
 import { currencyFormat } from "../../app/utils/utils";
 
@@ -14,33 +13,48 @@ export default function BasketSummary() {
 
   return (
     <>
-      <TableContainer component={Paper} variant={"outlined"}>
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableCell colSpan={2}>Subtotal</TableCell>
-              <TableCell align="right">{currencyFormat(subtotal)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell colSpan={2}>Delivery fee*</TableCell>
-              <TableCell align="right">{currencyFormat(deliveryFee)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell colSpan={2}>Total</TableCell>
-              <TableCell align="right">
-                {currencyFormat(subtotal + deliveryFee)}
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>
+      <Paper className="bg-customBackground text-gray-200">
+        <List>
+          <ListItem className="py-2">
+            <ListItemText
+              primary="Ara Toplam"
+              secondary={
+                <p className="text-gray-200">{currencyFormat(subtotal)}</p>
+              }
+            />
+          </ListItem>
+          <Divider color="white" />
+          <ListItem className="py-2">
+            <ListItemText
+              primary="Kargo Ücreti*"
+              secondary={
+                <p className="text-gray-200">{currencyFormat(deliveryFee)}</p>
+              }
+            />
+          </ListItem>
+          <Divider color="white" />
+          <ListItem className="py-2">
+            <ListItemText
+              primary="Toplam"
+              secondary={
+                <p className="text-gray-200">
+                  {currencyFormat(subtotal + deliveryFee)}
+                </p>
+              }
+            />
+          </ListItem>
+          <Divider color="white" />
+          <ListItem className="py-2">
+            <ListItemText
+              primary={
                 <span style={{ fontStyle: "italic" }}>
-                  *Orders over $100 qualify for free delivery
+                  $100 üzeri siparişler ücretsiz teslimat için uygundur
                 </span>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+              }
+            />
+          </ListItem>
+        </List>
+      </Paper>
     </>
   );
 }

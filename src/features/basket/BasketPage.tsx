@@ -48,8 +48,9 @@ export default function BasketPage() {
             variant="contained"
             size="large"
             fullWidth
+            className="mt-1 bg-customButtonBackground hover:bg-customButtonBackgroundHover"
           >
-            Checkout
+            Siparişi Tamamla
           </Button>
         </Grid>
       </Grid>

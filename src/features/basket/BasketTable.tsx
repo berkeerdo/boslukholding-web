@@ -1,17 +1,16 @@
 import { IoMdRemove, IoMdAdd, IoMdTrash } from "react-icons/io";
-import { LoadingButton } from "@mui/lab";
 import { BasketItem } from "../../app/models/basket";
 import { currencyFormat } from "../../app/utils/utils";
 import {
   Typography,
   List,
-  IconButton,
   ListItem,
   ListItemAvatar,
   ListItemSecondaryAction,
   ListItemText,
   Divider,
 } from "@mui/material";
+import CustomButton from "../../app/components/ui/CustomButton";
 
 interface Props {
   items: BasketItem[];
@@ -53,13 +52,13 @@ export default function BasketTable({ items, isBasket = true }: Props) {
               <ListItemSecondaryAction>
                 <div className="flex flex-col sm:flex-row">
                   <div className="flex flex-col-reverse md:flex-row items-center">
-                    <LoadingButton
+                    <CustomButton
                       onClick={() => console.log("decrease quantity")}
-                      component={IconButton}
                       className="rounded-full w-fit self-center"
+                      dynamic={true}
                     >
-                      <IoMdRemove />
-                    </LoadingButton>
+                      <IoMdRemove className="text-primary" />
+                    </CustomButton>
                     <Typography
                       variant="body1"
                       component="span"
@@ -67,21 +66,22 @@ export default function BasketTable({ items, isBasket = true }: Props) {
                     >
                       {item.quantity}
                     </Typography>
-                    <LoadingButton
+                    <CustomButton
                       onClick={() => console.log("increase quantity")}
-                      component={IconButton}
                       className="rounded-full w-fit self-center"
+                      dynamic={true}
                     >
-                      <IoMdAdd />
-                    </LoadingButton>
+                      <IoMdAdd className="text-primary" />
+                    </CustomButton>
                   </div>
-                  <LoadingButton
+                  <CustomButton
                     onClick={() => console.log("Deleted")}
                     className="rounded-full w-fit self-center"
+                    dynamic={true}
                   >
                     Ürünü Sil
-                    <IoMdTrash />
-                  </LoadingButton>
+                    <IoMdTrash className="text-primary" />
+                  </CustomButton>
                 </div>
               </ListItemSecondaryAction>
             </ListItem>

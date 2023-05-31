@@ -6,6 +6,8 @@ module.exports = {
       colors: {
         customButtonBackground: "#FF6F00",
         customBackground: "#2E2E2E",
+        primary: "#FF6F00",
+        customButtonBackgroundHover: "#FF8C00",
       },
     },
   },
