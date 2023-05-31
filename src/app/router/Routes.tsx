@@ -1,6 +1,7 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import App from "../layout/App";
 import HomePage from "../../features/home/HomePage";
+import BasketPage from "../../features/basket/BasketPage";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "basket",
-        element: <h1>Basket Page</h1>,
+        element: <BasketPage />,
       },
       {
         path: "checkout",

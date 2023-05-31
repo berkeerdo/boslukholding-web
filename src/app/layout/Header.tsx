@@ -25,6 +25,7 @@ import {
 } from "react-icons/ri";
 import SearchBar from "../components/SearcBar/SearchBar";
 import CustomButton from "../components/ui/CustomButton";
+import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
@@ -92,17 +93,20 @@ const Header: React.FC = () => {
       >
         <Toolbar className="flex justify-between">
           <div className="flex items-center space-x-6">
-            <Box
-              component="img"
-              sx={{
-                height: 60,
-                width: "auto",
-                maxHeight: { xs: 60, md: 60 },
-                maxWidth: { xs: 120, md: 120 },
-              }}
-              alt="Logo"
-              src={BoslukLogo}
-            />
+            <Link to="/">
+              <Box
+                component="img"
+                sx={{
+                  height: 60,
+                  width: "auto",
+                  maxHeight: { xs: 60, md: 60 },
+                  maxWidth: { xs: 120, md: 120 },
+                }}
+                alt="Logo"
+                src={BoslukLogo}
+              />
+            </Link>
+
             <CustomButton
               variant="contained"
               onClick={isMobile ? toggleDrawer : handleCategoriesMenuOpen}
@@ -223,6 +227,8 @@ const Header: React.FC = () => {
 
               <Button
                 variant="outlined"
+                component={Link}
+                to="/basket"
                 size="large"
                 className="space-x-2 uppercase "
                 sx={{

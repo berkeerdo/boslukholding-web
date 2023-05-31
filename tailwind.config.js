@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         customButtonBackground: "#FF6F00",
+        customBackground: "#2E2E2E",
       },
     },
   },

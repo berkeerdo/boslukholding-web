@@ -1,17 +1,28 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SliderData } from "../../models/swiper";
+import { Autoplay, Navigation, Pagination } from "swiper";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 interface Props {
   slides: SliderData[];
 }
 
 export default function Slider({ slides }: Props) {
+
+//   const [prevEl, setPrevEl] = useState<HTMLElement | null>(null)
+// const [nextEl, setPrevEl] = useState<HTMLElement | null>(null)
+
   return (
     <div className="w-full">
       <Swiper
         spaceBetween={16}
         slidesPerView={3}
         navigation
+        rewind={true}
+        loop={true}
+        modules={[Pagination, Autoplay, Navigation]}
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000 }}
       >

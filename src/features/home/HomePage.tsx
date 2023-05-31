@@ -55,7 +55,7 @@ export default function HomePage() {
         </Grid>
       </Grid>
       <div className="my-20">
-        <p className="text-3xl font-semibold">Markalar</p>
+        <p className="text-3xl font-semibold mb-5">Markalar</p>
         <Slider slides={sliderData} />
       </div>
     </>
