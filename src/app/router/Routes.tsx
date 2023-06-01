@@ -2,6 +2,10 @@ import { Navigate, createBrowserRouter } from "react-router-dom";
 import App from "../layout/App";
 import HomePage from "../../features/home/HomePage";
 import BasketPage from "../../features/basket/BasketPage";
+import CheckoutPage from "../../features/checkout/CheckoutPage";
+import OrderPage from "../../features/orders/OrderPage";
+import Login from "../../features/account/Login";
+import Register from "../../features/account/Register";
 
 export const router = createBrowserRouter([
   {
@@ -26,7 +30,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "checkout",
-        element: <h1>Checkout Page</h1>,
+        element: <CheckoutPage />,
       },
       {
         path: "account",
@@ -41,17 +45,21 @@ export const router = createBrowserRouter([
         element: <h1>About Page</h1>,
       },
       {
+        path: "orders",
+        element: <OrderPage />,
+      },
+      {
         path: "not-found",
         element: <h1>Not Found Page</h1>,
       },
 
       {
         path: "login",
-        element: <h1>Login Page</h1>,
+        element: <Login />,
       },
       {
         path: "register",
-        element: <h1>Register Page</h1>,
+        element: <Register />,
       },
       {
         path: "*",

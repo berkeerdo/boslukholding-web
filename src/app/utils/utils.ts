@@ -4,5 +4,5 @@ export function getCookie(key: string) {
 }
 
 export function currencyFormat(amount: number) {
-  return "$" + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+  return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,") + " ₺";
 }

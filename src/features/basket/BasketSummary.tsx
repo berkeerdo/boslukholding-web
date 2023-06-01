@@ -1,10 +1,4 @@
-import {
-  Paper,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-} from "@mui/material";
+import { Paper, List, ListItem, ListItemText, Divider } from "@mui/material";
 import { currencyFormat } from "../../app/utils/utils";
 
 export default function BasketSummary() {
@@ -48,7 +42,7 @@ export default function BasketSummary() {
             <ListItemText
               primary={
                 <span style={{ fontStyle: "italic" }}>
-                  $100 üzeri siparişler ücretsiz teslimat için uygundur
+                  100 ₺ üzeri siparişler ücretsiz teslimat için uygundur
                 </span>
               }
             />

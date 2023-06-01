@@ -209,14 +209,26 @@ const Header: React.FC = () => {
                 sx={{ marginTop: "3px" }}
               >
                 <MenuList dense sx={{ width: 160, maxWidth: "100%" }}>
-                  <MenuItem onClick={handleAccountMenuClose}>
+                  <MenuItem
+                    component={Link}
+                    to="/login"
+                    onClick={handleAccountMenuClose}
+                  >
                     <ListItemText>Giriş Yap</ListItemText>
                   </MenuItem>
-                  <MenuItem onClick={handleAccountMenuClose}>
+                  <MenuItem
+                    component={Link}
+                    to="/register"
+                    onClick={handleAccountMenuClose}
+                  >
                     <ListItemText>Kayıt Ol</ListItemText>
                   </MenuItem>
                   <Divider />
-                  <MenuItem onClick={handleAccountMenuClose}>
+                  <MenuItem
+                    component={Link}
+                    to="/orders"
+                    onClick={handleAccountMenuClose}
+                  >
                     <ListItemText>Siparişlerim</ListItemText>
                   </MenuItem>
                   <MenuItem onClick={handleAccountMenuClose}>
