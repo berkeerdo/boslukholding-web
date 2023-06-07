@@ -13,6 +13,8 @@ import { RiLock2Fill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
+import agent from "../../app/api/agent";
+import { showSnackbar } from "../../app/components/Snackbar/snackBarSlice";
 
 const StyledTextField = styled(TextField)`
   label.Mui-focused {
@@ -83,7 +85,17 @@ export default function Register() {
         </Typography>
         <Box
           component="form"
-          onSubmit={() => console.log("submit")}
+          onSubmit={(data) =>
+            agent.Account.register(data)
+              .then(() => {
+                showSnackbar({
+                  message: "Kayıt başarılı",
+                  severity: "success",
+                });
+                navigate("/login");
+              })
+              .catch((error) => hanleApiErrors(error.data))
+          }
           noValidate
           sx={{ mt: 1 }}
         >

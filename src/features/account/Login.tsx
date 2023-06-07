@@ -11,6 +11,8 @@ import { FieldValues, useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import { RiLock2Fill } from "react-icons/ri";
 import { styled } from "@mui/material/styles";
+import { useAppDispatch } from "../../app/store/configureStore";
+import { signInUser } from "./accountSlice";
 
 const StyledTextField = styled(TextField)`
   label.Mui-focused {
@@ -38,6 +40,7 @@ const StyledTextField = styled(TextField)`
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -47,14 +50,14 @@ export default function Login() {
     mode: "onTouched",
   });
 
-  //   async function submitForm(data: FieldValues) {
-  //     try {
-  //       await dispatch(signInUser(data));
-  //       navigate(location.state?.from || "/catalog");
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
+  async function submitForm(data: FieldValues) {
+    try {
+      await dispatch(signInUser(data));
+      navigate(location.state?.from || "/catalog");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Container
@@ -76,7 +79,7 @@ export default function Login() {
       </Typography>
       <Box
         component="form"
-        onSubmit={() => console.log("submit")}
+        onSubmit={() => handleSubmit(submitForm)}
         noValidate
         sx={{ mt: 1 }}
       >
