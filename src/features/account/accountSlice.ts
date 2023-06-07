@@ -4,6 +4,7 @@ import { FieldValues } from "react-hook-form";
 import agent from "../../app/api/agent";
 import { router } from "../../app/router/Routes";
 import { setBasket } from "../basket/basketSlice";
+import { showSnackbar } from "../../app/components/Snackbar/snackBarSlice";
 
 interface AccountState {
   user: User | null;
@@ -66,7 +67,7 @@ export const accountSlice = createSlice({
     builder.addCase(fetchCurrentUser.rejected, (state) => {
       state.user = null;
       localStorage.removeItem("user");
-    //   toast.error("Session expired - please login again");
+      showSnackbar({ message: "Please login to continue", severity: "error" });
       router.navigate("/");
     });
     builder.addMatcher(

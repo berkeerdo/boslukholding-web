@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import agent from "../../app/api/agent";
 import { showSnackbar } from "../../app/components/Snackbar/snackBarSlice";
+import { useAppDispatch } from "../../app/store/configureStore";
 
 const StyledTextField = styled(TextField)`
   label.Mui-focused {
@@ -41,6 +42,7 @@ const StyledTextField = styled(TextField)`
 
 export default function Register() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -85,17 +87,19 @@ export default function Register() {
         </Typography>
         <Box
           component="form"
-          onSubmit={(data) =>
+          onSubmit={handleSubmit((data) =>
             agent.Account.register(data)
               .then(() => {
-                showSnackbar({
-                  message: "Kayıt başarılı",
-                  severity: "success",
-                });
+                dispatch(
+                  showSnackbar({
+                    message: "Kayıt başarılı",
+                    severity: "success",
+                  })
+                );
                 navigate("/login");
               })
-              .catch((error) => hanleApiErrors(error.data))
-          }
+              .catch((error) => hanleApiErrors(error))
+          )}
           noValidate
           sx={{ mt: 1 }}
         >
@@ -154,7 +158,9 @@ export default function Register() {
           </LoadingButton>
           <Grid container>
             <Grid item>
-              <Link to="/login">{"Already have an account? Sign Up"}</Link>
+              <Link to="/login">
+                {"Hesabınız var mı? Giriş yapmak için tıklayın."}
+              </Link>
             </Grid>
           </Grid>
         </Box>

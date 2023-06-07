@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { router } from "../router/Routes";
 import { PaginatedResponse } from "../models/pagination";
 import { store } from "../store/configureStore";
+import { showSnackbar } from "../components/Snackbar/snackBarSlice";
 
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -43,14 +43,24 @@ axios.interceptors.response.use(
           }
           throw modelStateErorrs.flat();
         }
-
+        store.dispatch(
+          showSnackbar({ message: data.title.toString(), severity: "error" })
+        );
         break;
       case 401:
+        store.dispatch(
+          showSnackbar({ message: data.title.toString(), severity: "error" })
+        );
         break;
       case 404:
+        store.dispatch(
+          showSnackbar({ message: data.title.toString(), severity: "error" })
+        );
         break;
       case 500:
-        router.navigate("/server-error", { state: { error: data } });
+        store.dispatch(
+          showSnackbar({ message: data.title.toString(), severity: "error" })
+        );
         break;
       default:
         break;

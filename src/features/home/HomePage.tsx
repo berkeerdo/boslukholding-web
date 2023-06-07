@@ -44,7 +44,7 @@ export default function HomePage() {
         <Grid item xs={12} sm={6}>
           <ImageSlider />
         </Grid>
-        <Grid sm={2}></Grid>
+        <Grid item sm={2}></Grid>
         <Grid item xs={12} sm={4}>
           {/* Product Card */}
           <div className="bg-gray-300 h-full">Product Card</div>

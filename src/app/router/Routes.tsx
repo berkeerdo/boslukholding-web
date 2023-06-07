@@ -6,6 +6,8 @@ import CheckoutPage from "../../features/checkout/CheckoutPage";
 import OrderPage from "../../features/orders/OrderPage";
 import Login from "../../features/account/Login";
 import Register from "../../features/account/Register";
+import AboutPage from "../../features/about/AboutPage";
+import Catalog from "../../features/catalog/Catalog";
 
 export const router = createBrowserRouter([
   {
@@ -18,7 +20,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "products",
-        element: <h1>Products Page</h1>,
+        element: <Catalog />,
       },
       {
         path: "products/:id",
@@ -42,7 +44,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "about",
-        element: <h1>About Page</h1>,
+        element: <AboutPage />,
       },
       {
         path: "orders",
