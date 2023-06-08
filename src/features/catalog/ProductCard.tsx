@@ -24,16 +24,16 @@ export default function ProductCard({ product }: Props) {
   const dispatch = useAppDispatch();
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345 }} className="bg-customBackground text-gray-200">
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "secondary.main" }}>
+          <Avatar sx={{ bgcolor: "#FF6F00" }}>
             {product.name.charAt(0).toUpperCase()}
           </Avatar>
         }
         title={product.name}
         titleTypographyProps={{
-          sx: { fontWeight: "bold", color: "primary.main" },
+          sx: { fontWeight: "bold", color: "white" },
         }}
       />
       <CardMedia
@@ -42,14 +42,14 @@ export default function ProductCard({ product }: Props) {
         title={product.name}
       />
       <CardContent>
-        <Typography gutterBottom color="secondary" variant="h5">
+        <Typography gutterBottom color="#FF6F00" variant="h5">
           {currencyFormat(product.price)}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="white">
           {product.brand} / {product.type}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions className="flex items-center justify-between">
         <LoadingButton
           loading={status.includes("pendingAddItem" + product.id)}
           onClick={() =>
@@ -57,10 +57,10 @@ export default function ProductCard({ product }: Props) {
           }
           size="small"
         >
-          Add to cart
+          Sepete Ekle
         </LoadingButton>
-        <Button component={Link} to={`/catalog/${product.id}`} size="small">
-          View
+        <Button component={Link} to={`/products/${product.id}`} size="small">
+          Görüntüle
         </Button>
       </CardActions>
     </Card>

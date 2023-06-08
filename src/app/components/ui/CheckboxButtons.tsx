@@ -30,6 +30,11 @@ export default function CheckboxButtons({ items, checked, onChange }: Props) {
             <Checkbox
               checked={checkedItems.indexOf(item) !== -1}
               onClick={() => handleChecked(item)}
+              sx={{
+                "&.MuiCheckbox-root": {
+                  color: "#FF6F00", // Border rengi
+                },
+              }}
             />
           }
           label={item}

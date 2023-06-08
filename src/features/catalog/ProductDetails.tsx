@@ -6,7 +6,6 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  TextField,
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -20,6 +19,7 @@ import {
   removeBasketItemAsync,
 } from "../basket/basketSlice";
 import { fetchProductAsync, productSelectors } from "./catalogSlice";
+import { StyledTextField } from "../../app/components/StyledComponents/CustomTexfFieldStlyed";
 
 export default function ProductDetails() {
   const { basket, status } = useAppSelector((state) => state.basket);
@@ -80,63 +80,73 @@ export default function ProductDetails() {
         />
       </Grid>
       <Grid item xs={6}>
-        <Typography variant="h3">{product.name}</Typography>
-        <Divider sx={{ mb: 2 }} />
-        <Typography variant="h4" color="secondary">
-          ${(product.price / 100).toFixed(2)}
-        </Typography>
-        <TableContainer>
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>{product.name}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Description</TableCell>
-                <TableCell>{product.description}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Type</TableCell>
-                <TableCell>{product.type}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Brand</TableCell>
-                <TableCell>{product.brand}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Quantity in stock</TableCell>
-                <TableCell>{product.quantityInStock}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <TextField
-              onChange={hanleInputChange}
-              variant="outlined"
-              type="number"
-              label="Quantity in Cart"
-              fullWidth
-              value={quantity}
-            />
+        <div className="bg-customBackground p-5 shadow-xl rounded-xl">
+          <Typography variant="h3">{product.name}</Typography>
+          <Divider sx={{ mb: 2, mt: 1 }} color="white" />
+          <Typography variant="h4" className="text-primary">
+            ${(product.price / 100).toFixed(2)}
+          </Typography>
+          <TableContainer>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell sx={{ color: "white" }}>Ürün Adı:</TableCell>
+                  <TableCell sx={{ color: "white" }}>{product.name}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell sx={{ color: "white" }}>
+                    Ürün Açıklaması:
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }}>
+                    {product.description}
+                  </TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell sx={{ color: "white" }}>Türü:</TableCell>
+                  <TableCell sx={{ color: "white" }}>{product.type}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell sx={{ color: "white" }}>Markası:</TableCell>
+                  <TableCell sx={{ color: "white" }}>{product.brand}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell sx={{ color: "white" }}>
+                    Quantity in stock
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }}>
+                    {product.quantityInStock}
+                  </TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Grid container spacing={2} mt={2}>
+            <Grid item xs={6}>
+              <StyledTextField
+                onChange={hanleInputChange}
+                variant="outlined"
+                type="number"
+                label="Sepetteki Miktar"
+                fullWidth
+                value={quantity}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <LoadingButton
+                sx={{ height: "55px" }}
+                disabled={item?.quantity === quantity || quantity === 0}
+                color="primary"
+                size="large"
+                variant="contained"
+                fullWidth
+                loading={status.includes("pending")}
+                onClick={handleUpdateCart}
+              >
+                {item ? "Update Cart" : "Add to Cart"}
+              </LoadingButton>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <LoadingButton
-              sx={{ height: "55px" }}
-              disabled={item?.quantity === quantity || quantity === 0 || !item}
-              color="primary"
-              size="large"
-              variant="contained"
-              fullWidth
-              loading={status.includes("pending")}
-              onClick={handleUpdateCart}
-            >
-              {item ? "Update Cart" : "Add to Cart"}
-            </LoadingButton>
-          </Grid>
-        </Grid>
+        </div>
       </Grid>
     </Grid>
   );

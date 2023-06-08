@@ -17,14 +17,13 @@ export default function AppPagination({ metaData, onPageChange }: Props) {
       marginBottom={2}
     >
       <Typography>
-        Displaying {(currentPage - 1) * pageSize + 1} -{" "}
-        {currentPage * pageSize > totalCount
-          ? totalCount
-          : currentPage * pageSize}{" "}
-        of {totalCount} items
+        Şu anda gösterilen öğeler: {(currentPage - 1) * pageSize + 1} -{" "}
+        {Math.min(currentPage * pageSize, totalCount)} / Toplam öğe sayısı:{" "}
+        {totalCount}
       </Typography>
       <Pagination
-        color="secondary"
+        color="primary"
+        sx={{ "& .MuiPaginationItem-root": { color: "white" } }}
         size="large"
         count={totalPages}
         page={currentPage}

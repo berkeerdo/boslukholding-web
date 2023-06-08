@@ -16,6 +16,7 @@ import {
   List,
   ListItem,
   IconButton,
+  Badge,
 } from "@mui/material";
 import {
   RiArrowDropDownLine,
@@ -26,8 +27,13 @@ import {
 import SearchBar from "../components/SearcBar/SearchBar";
 import CustomButton from "../components/ui/CustomButton";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../store/configureStore";
+import { SmallBadge } from "../components/StyledComponents/CustomBadgeStyled";
 
 const Header: React.FC = () => {
+  const { basket } = useAppSelector((state) => state.basket);
+  const { user } = useAppSelector((state) => state.account);
+  const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [isDrawer2Open, setIsDrawer2Open] = React.useState(false);
   const theme = useTheme();
@@ -187,7 +193,8 @@ const Header: React.FC = () => {
                 aria-controls="account-menu"
               >
                 <div className="flex flex-col items-center justify-center">
-                  <p>Giriş / Kayıt ol</p>
+                  {user ? <p>{user.email}</p> : <p>Giriş / Kayıt ol</p>}
+
                   <span className="text-xs text-gray-300/90 ">
                     Hesap Ayarları
                   </span>
@@ -242,7 +249,7 @@ const Header: React.FC = () => {
                 component={Link}
                 to="/basket"
                 size="large"
-                className="space-x-2 uppercase "
+                className="space-x-2 uppercase"
                 sx={{
                   textTransform: "none",
                   borderColor: "#F8F8F8",
@@ -255,7 +262,9 @@ const Header: React.FC = () => {
                 }}
               >
                 <p>Sepetim</p>
-                <RiShoppingCart2Fill />
+                <SmallBadge badgeContent={itemCount} color="error">
+                  <RiShoppingCart2Fill className="mb-1" />
+                </SmallBadge>
               </Button>
             </div>
           )}

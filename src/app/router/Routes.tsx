@@ -8,6 +8,7 @@ import Login from "../../features/account/Login";
 import Register from "../../features/account/Register";
 import AboutPage from "../../features/about/AboutPage";
 import Catalog from "../../features/catalog/Catalog";
+import ProductDetails from "../../features/catalog/ProductDetails";
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "products/:id",
-        element: <h1>Product Detail Page</h1>,
+        element: <ProductDetails />,
       },
       {
         path: "basket",

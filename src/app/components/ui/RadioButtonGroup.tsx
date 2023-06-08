@@ -19,13 +19,21 @@ export default function RadioButtonGroup({
 }: Props) {
   return (
     <FormControl>
-      <FormLabel>Sort By</FormLabel>
+      <FormLabel sx={{ color: "white" }}>Sort By</FormLabel>
       <RadioGroup onChange={onChange} value={selectedValue}>
         {options.map(({ value, label }) => (
           <FormControlLabel
             key={value}
             value={value}
-            control={<Radio />}
+            control={
+              <Radio
+                sx={{
+                  "&.Mui-checked": {
+                    color: "#FF6F00", // Seçili durumda kullanılacak renk
+                  },
+                }}
+              />
+            }
             label={label}
           />
         ))}

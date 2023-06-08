@@ -12,14 +12,15 @@ import LoadingComponent from "./LoadingComponent";
 function App() {
   const dispatch = useAppDispatch();
   const snackbarOpen = useAppSelector((state) => state.snackbar.open);
-  const basket = useAppSelector((state) => state.basket.basket);
+  const basket = useAppSelector((state) => state.basket);
   const [loading, setLoading] = useState(true);
 
   const initApp = useCallback(async () => {
     try {
       await dispatch(fetchCurrentUser());
-      await dispatch(fetchBasketAsync());
-
+      if (basket.status === "idle") {
+        await dispatch(fetchBasketAsync());
+      }
     } catch (error) {
       console.log(error);
     }

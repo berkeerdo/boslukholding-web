@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -53,7 +52,7 @@ export default function Login() {
   async function submitForm(data: FieldValues) {
     try {
       await dispatch(signInUser(data));
-      navigate(location.state?.from || "/catalog");
+      navigate(location.state?.from || "/products");
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +78,7 @@ export default function Login() {
       </Typography>
       <Box
         component="form"
-        onSubmit={() => handleSubmit(submitForm)}
+        onSubmit={handleSubmit(submitForm)}
         noValidate
         sx={{ mt: 1 }}
       >

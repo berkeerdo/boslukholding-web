@@ -11,6 +11,9 @@ import {
   Divider,
 } from "@mui/material";
 import CustomButton from "../../app/components/ui/CustomButton";
+import { addBasketItemAsync, removeBasketItemAsync } from "./basketSlice";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { LoadingButton } from "@mui/lab";
 
 interface Props {
   items: BasketItem[];
@@ -18,6 +21,9 @@ interface Props {
 }
 
 export default function BasketTable({ items, isBasket = true }: Props) {
+  const { status } = useAppSelector((state) => state.basket);
+  const dispatch = useAppDispatch();
+
   return (
     <div className="bg-customBackground text-gray-200 rounded-xl shadow-xl">
       <List>
@@ -52,13 +58,23 @@ export default function BasketTable({ items, isBasket = true }: Props) {
               <ListItemSecondaryAction>
                 <div className="flex flex-col sm:flex-row">
                   <div className="flex flex-col-reverse md:flex-row items-center">
-                    <CustomButton
-                      onClick={() => console.log("decrease quantity")}
+                    <LoadingButton
+                      loading={
+                        status === "pendingRemoveItem" + item.productId + "rem"
+                      }
+                      onClick={() =>
+                        dispatch(
+                          removeBasketItemAsync({
+                            productId: item.productId,
+                            quantity: 1,
+                            name: "rem",
+                          })
+                        )
+                      }
                       className="rounded-full w-fit self-center"
-                      dynamic={true}
                     >
                       <IoMdRemove className="text-primary" />
-                    </CustomButton>
+                    </LoadingButton>
                     <Typography
                       variant="body1"
                       component="span"
@@ -66,22 +82,38 @@ export default function BasketTable({ items, isBasket = true }: Props) {
                     >
                       {item.quantity}
                     </Typography>
-                    <CustomButton
-                      onClick={() => console.log("increase quantity")}
+                    <LoadingButton
+                      loading={status === "pendingAddItem" + item.productId}
+                      onClick={() =>
+                        dispatch(
+                          addBasketItemAsync({
+                            productId: item.productId,
+                          })
+                        )
+                      }
                       className="rounded-full w-fit self-center"
-                      dynamic={true}
                     >
                       <IoMdAdd className="text-primary" />
-                    </CustomButton>
+                    </LoadingButton>
                   </div>
-                  <CustomButton
-                    onClick={() => console.log("Deleted")}
-                    className="rounded-full w-fit self-center"
-                    dynamic={true}
+                  <LoadingButton
+                    loading={
+                      status === "pendingRemoveItem" + item.productId + "del"
+                    }
+                    onClick={() =>
+                      dispatch(
+                        removeBasketItemAsync({
+                          productId: item.productId,
+                          quantity: item.quantity,
+                          name: "del",
+                        })
+                      )
+                    }
+                    className="rounded-full w-fit self-center text-gray-200 capitalize font-semibold"
                   >
                     Ürünü Sil
                     <IoMdTrash className="text-primary" />
-                  </CustomButton>
+                  </LoadingButton>
                 </div>
               </ListItemSecondaryAction>
             </ListItem>

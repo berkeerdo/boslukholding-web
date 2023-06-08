@@ -49,7 +49,10 @@ export default function Catalog() {
         <Paper sx={{ mb: 2 }}>
           <ProductSearch />
         </Paper>
-        <Paper sx={{ mb: 2, p: 2 }}>
+        <Paper
+          sx={{ mb: 2, p: 2 }}
+          className="bg-customBackground text-gray-200"
+        >
           <RadioButtonGroup
             selectedValue={productParams.orderBy}
             options={sortOptions}
@@ -58,8 +61,11 @@ export default function Catalog() {
             }
           />
         </Paper>
-        <Paper sx={{ mb: 2, p: 2 }}>
-          <FormLabel>Brands</FormLabel>
+        <Paper
+          sx={{ mb: 2, p: 2 }}
+          className="bg-customBackground text-gray-200"
+        >
+          <FormLabel sx={{ color: "white" }}>Brands</FormLabel>
           <CheckboxButtons
             items={brands}
             checked={productParams.brands}
@@ -68,8 +74,11 @@ export default function Catalog() {
             }
           />
         </Paper>
-        <Paper sx={{ mb: 2, p: 2 }}>
-          <FormLabel>Types</FormLabel>
+        <Paper
+          sx={{ mb: 2, p: 2 }}
+          className="bg-customBackground text-gray-200"
+        >
+          <FormLabel sx={{ color: "white" }}>Types</FormLabel>
           <CheckboxButtons
             items={types}
             checked={productParams.types}
