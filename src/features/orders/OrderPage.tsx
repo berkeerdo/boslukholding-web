@@ -1,25 +1,19 @@
 import { Typography, Grid, Divider } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { currencyFormat } from "../../app/utils/utils";
+import agent from "../../app/api/agent";
 
 export default function OrderPage() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [orders, setOrders] = useState([
-    {
-      id: 1,
-      customerName: "Mehmet",
-      date: "2021-10-10",
-      totalAmount: 100,
-      status: "Onay Bekliyor",
-    },
-    {
-      id: 2,
-      customerName: "Ahmet",
-      date: "2021-10-10",
-      totalAmount: 100,
-      status: "Onay Bekliyor",
-    },
-  ]);
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    agent.Orders.list()
+      .then((response) => {
+        console.log(response);
+        setOrders(response);
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <>

@@ -10,7 +10,6 @@ import {
   setProductParams,
 } from "./catalogSlice";
 import { FormLabel, Grid, Paper } from "@mui/material";
-import ProductSearch from "./ProductSearch";
 import RadioButtonGroup from "../../app/components/ui/RadioButtonGroup";
 import CheckboxButtons from "../../app/components/ui/CheckboxButtons";
 import AppPagination from "../../app/components/ui/AppPagination";
@@ -46,9 +45,6 @@ export default function Catalog() {
   return (
     <Grid container columnSpacing={4}>
       <Grid item xs={3}>
-        <Paper sx={{ mb: 2 }}>
-          <ProductSearch />
-        </Paper>
         <Paper
           sx={{ mb: 2, p: 2 }}
           className="bg-customBackground text-gray-200"

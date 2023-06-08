@@ -10,10 +10,10 @@ export default function BasketPage() {
   if (basket?.items.length === 0)
     return (
       <div className="flex items-center justify-center flex-col">
-        <h1 className="text-2xl">
-          Sepetinizde ürün bulunmamaktadır.
-        </h1>
-        <Link to={"/products"} className="text-blue-500">Ürünlere gitmek için tıklayınız</Link>
+        <h1 className="text-2xl">Sepetinizde ürün bulunmamaktadır.</h1>
+        <Link to={"/products"} className="text-blue-500">
+          Ürünlere gitmek için tıklayınız
+        </Link>
       </div>
     );
 

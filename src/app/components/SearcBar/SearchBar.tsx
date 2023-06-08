@@ -1,76 +1,55 @@
-import React, { useState } from "react";
-import Autocomplete from "@mui/material/Autocomplete";
-import { FaSearch } from "react-icons/fa";
-import axios from "axios";
-import { TextField } from "@mui/material";
+import { Autocomplete } from "@mui/material";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { Product } from "../../models/product";
+import { StyledTextField } from "../StyledComponents/CustomTexfFieldStlyed";
+import {
+  setProductParams,
+  productSelectors,
+} from "../../../features/catalog/catalogSlice";
 
-interface Product {
-  id: number;
-  name: string;
-  category: string;
-}
+export default function ProductSearch() {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const products = useAppSelector(productSelectors.selectAll);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-const SearchBar: React.FC = () => {
-  const [options, setOptions] = useState<Product[]>([]);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const searchQuery = event.target.value;
+  const debouncedSearchTerm = (value: string) => {
+    navigate(`/products`);
+    dispatch(setProductParams({ searchTerm: value }));
+  };
 
-    if (searchQuery.length >= 3) {
-      axios
-        .get(`https://dummyjson.com/products/search?q=${searchQuery}`)
-        .then((response) => {
-          const data = response.data; // Gelen veri objesi
-
-          // Veriyi diziye dönüştürme işlemi
-          const dataArray = data.products.map((item: any) => {
-            return {
-              id: parseInt(item.id, 10),
-              name: item.title,
-              category: item.category,
-            };
-          });
-
-          setOptions(dataArray);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+  const handleSearchChange = (
+    event: React.ChangeEvent<{}>,
+    value: Product | null
+  ) => {
+    if (value) {
+      setSelectedProduct(value);
+      debouncedSearchTerm(value.name);
     } else {
-      setOptions([]);
+      setSelectedProduct(null);
+      debouncedSearchTerm("");
     }
   };
 
   return (
     <Autocomplete
-      key="autocomplete"
-      options={options}
-      className="m-0 p-2 w-full"
-      getOptionLabel={(option) =>
-        option.name ? option.name : "Ürün Bulunamadı"
-      }
+      options={products}
+      getOptionLabel={(product) => product.name}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
+      value={selectedProduct}
+      onChange={handleSearchChange}
       renderInput={(params) => (
-        <TextField
+        <StyledTextField
           {...params}
-          placeholder="Search"
+          label="Ürünleri Ara"
           variant="outlined"
-          className="bg-white"
-          sx={{ borderRadius: "0.5rem" }}
-          size="small"
-          onChange={handleSearch}
-          InputProps={{
-            ...params.InputProps,
-            startAdornment: (
-              <>
-                <FaSearch />
-                {params.InputProps.startAdornment}
-              </>
-            ),
-          }}
+          fullWidth
         />
       )}
     />
   );
-};
-
-export default SearchBar;
+}

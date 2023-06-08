@@ -1,9 +1,13 @@
 import { Paper, List, ListItem, ListItemText, Divider } from "@mui/material";
 import { currencyFormat } from "../../app/utils/utils";
+import { useAppSelector } from "../../app/store/configureStore";
 
 export default function BasketSummary() {
-  const subtotal = 100;
-  const deliveryFee = 10;
+  const { basket } = useAppSelector((state) => state.basket);
+  const subtotal =
+    basket?.items.reduce((sum, item) => sum + item.price * item.quantity, 0) ??
+    0;
+  const deliveryFee = subtotal && subtotal > 100 ? 0 : 500;
 
   return (
     <>

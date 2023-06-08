@@ -8,6 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 import { fetchCurrentUser } from "../../features/account/accountSlice";
 import { fetchBasketAsync } from "../../features/basket/basketSlice";
 import LoadingComponent from "./LoadingComponent";
+import { fetchProductsAsync } from "../../features/catalog/catalogSlice";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -18,13 +19,14 @@ function App() {
   const initApp = useCallback(async () => {
     try {
       await dispatch(fetchCurrentUser());
+      await dispatch(fetchProductsAsync());
       if (basket.status === "idle") {
         await dispatch(fetchBasketAsync());
       }
     } catch (error) {
       console.log(error);
     }
-  }, [dispatch]);
+  }, [dispatch, basket.status]);
 
   useEffect(() => {
     initApp().then(() => setLoading(false));

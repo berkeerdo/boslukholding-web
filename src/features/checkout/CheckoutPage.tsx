@@ -10,10 +10,13 @@ import { useState } from "react";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, FieldValues } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./checkoutValidation";
 import { LoadingButton } from "@mui/lab";
+import agent from "../../app/api/agent";
+import { useAppDispatch } from "../../app/store/configureStore";
+import { clearBasket } from "../basket/basketSlice";
 
 const steps = ["Kargo Adresi", "Sipariş Önizlemesi", "Ödeme Detayları"];
 
@@ -32,10 +35,9 @@ function getStepContent(step: number) {
 
 export default function CheckoutPage() {
   const [activeStep, setActiveStep] = useState(0);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [orderNumber, setOrderNumber] = useState(0);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   const currentValidationSchema = validationSchema[activeStep];
 
@@ -44,30 +46,26 @@ export default function CheckoutPage() {
     resolver: yupResolver(currentValidationSchema),
   });
 
-  // const handleNext = async (data: FieldValues) => {
-  //   const { nameOnCard, saveAddress, ...shippingAddress } = data;
-  //   if (activeStep === steps.length - 1) {
-  //     setLoading(true);
-  //     try {
-  //       const orderNumber = await agent.Orders.create({
-  //         saveAddress,
-  //         shippingAddress,
-  //       });
-  //       setOrderNumber(orderNumber);
-  //       setActiveStep(activeStep + 1);
-  //       dispatch(clearBasket());
-  //       setLoading(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //       setLoading(false);
-  //     }
-  //   } else {
-  //     setActiveStep(activeStep + 1);
-  //   }
-  // };
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
+  const handleNext = async (data: FieldValues) => {
+    const { nameOnCard, saveAddress, ...shippingAddress } = data;
+    if (activeStep === steps.length - 1) {
+      setLoading(true);
+      try {
+        const orderNumber = await agent.Orders.create({
+          saveAddress,
+          shippingAddress,
+        });
+        setOrderNumber(orderNumber);
+        setActiveStep(activeStep + 1);
+        dispatch(clearBasket());
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    } else {
+      setActiveStep(activeStep + 1);
+    }
   };
 
   const handleBack = () => {
