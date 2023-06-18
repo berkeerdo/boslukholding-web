@@ -1,42 +1,52 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { SliderData } from "../../models/swiper";
-import { Autoplay, Navigation, Pagination } from "swiper";
+import { Autoplay, Navigation } from "swiper";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import { Avatar } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { useEffect } from "react";
+import {
+  fetchFilters,
+  setProductParams,
+} from "../../../features/catalog/catalogSlice";
+import { useNavigate } from "react-router-dom";
 
-interface Props {
-  slides: SliderData[];
-}
+export default function BrandCarousel() {
+  const { brands } = useAppSelector((state) => state.catalog);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-export default function Slider({ slides }: Props) {
+  const brandSelect = (value: string) => {
+    navigate(`/products`);
+    dispatch(setProductParams({ searchTerm: value }));
+  };
 
-//   const [prevEl, setPrevEl] = useState<HTMLElement | null>(null)
-// const [nextEl, setPrevEl] = useState<HTMLElement | null>(null)
+  useEffect(() => {
+    dispatch(fetchFilters());
+  }, [dispatch]);
 
   return (
     <div className="w-full">
       <Swiper
         spaceBetween={16}
-        slidesPerView={3}
+        slidesPerView={5}
         navigation
         rewind={true}
         loop={true}
-        modules={[Pagination, Autoplay, Navigation]}
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 3000 }}
+        modules={[Autoplay, Navigation]}
+        autoplay={true}
       >
-        {slides.map((slide) => (
-          <SwiperSlide key={slide.id}>
-            <div className="bg-gray-300 h-64 w-full">
-              <img
-                src={slide.image}
-                alt={slide.title}
-                className="h-full w-full object-cover"
+        {brands.map((brand) => (
+          <SwiperSlide key={brand} onClick={() => brandSelect(brand)}>
+            <div className="flex flex-col justify-center items-center h-64 w-full cursor-pointer">
+              <Avatar
+                alt={brand}
+                src={`https://logo.clearbit.com/${brand}.com`}
+                sx={{ width: 100, height: 100, objectFit: "cover" }}
+                variant="rounded"
               />
-              <div className="absolute bottom-4 left-4 text-white text-xl font-semibold">
-                {slide.title}
-              </div>
+              <p className="text-xl font-semibold mt-1">{brand}</p>
             </div>
           </SwiperSlide>
         ))}

@@ -5,6 +5,7 @@ import { signOutUser } from "../../../features/account/accountSlice";
 import { clearBasket } from "../../../features/basket/basketSlice";
 import CustomButton from "../ui/CustomButton";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 export default function SignedInMenu() {
   const dispatch = useAppDispatch();
@@ -52,7 +53,7 @@ export default function SignedInMenu() {
           <MenuItem onClick={handleClose}>
             <ListItemText>Profilim</ListItemText>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={handleClose} component={Link} to="/orders">
             <ListItemText>Siparişlerim</ListItemText>
           </MenuItem>
           <MenuItem

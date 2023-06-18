@@ -40,7 +40,12 @@ export default function Catalog() {
     if (!filtersLoaded) dispatch(fetchFilters());
   }, [dispatch, filtersLoaded]);
 
-  if (!filtersLoaded) return <LoadingComponent message="Ürünler Yükleniyor..." />;
+  if (!filtersLoaded)
+    return <LoadingComponent message="Ürünler Yükleniyor..." />;
+
+  console.log(
+    brands.map((brand) => (productParams.brands.includes(brand) ? brand : ""))
+  );
 
   return (
     <Grid container columnSpacing={4}>
@@ -64,7 +69,9 @@ export default function Catalog() {
           <FormLabel sx={{ color: "white" }}>Markalar</FormLabel>
           <CheckboxButtons
             items={brands}
-            checked={productParams.brands}
+            checked={brands.map((brand) =>
+              productParams.brands.includes(brand) ? brand : ""
+            )}
             onChange={(items: string[]) =>
               dispatch(setProductParams({ brands: items }))
             }
