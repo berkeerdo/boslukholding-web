@@ -19,7 +19,7 @@ export default function RadioButtonGroup({
 }: Props) {
   return (
     <FormControl>
-      <FormLabel sx={{ color: "white" }}>Sort By</FormLabel>
+      <FormLabel sx={{ color: "white" }}>Sırala</FormLabel>
       <RadioGroup onChange={onChange} value={selectedValue}>
         {options.map(({ value, label }) => (
           <FormControlLabel
@@ -34,7 +34,15 @@ export default function RadioButtonGroup({
                 }}
               />
             }
-            label={label}
+            label={
+              label === "Alphabetical"
+                ? "Alfabetik"
+                : label && label === "Price: High to Low"
+                ? "Fiyat: Yüksekten Düşüğe"
+                : label && label === "Price: Low to High"
+                ? "Fiyat: Düşükten Yükseğe"
+                : ""
+            }
           />
         ))}
       </RadioGroup>

@@ -12,7 +12,7 @@ import { fetchProductsAsync } from "../../features/catalog/catalogSlice";
 
 function App() {
   const dispatch = useAppDispatch();
-  const snackbarOpen = useAppSelector((state) => state.snackbar.open);
+  const snackbarOpen = useAppSelector((state) => state.snackbar?.open);
   const basket = useAppSelector((state) => state.basket);
   const [loading, setLoading] = useState(true);
 

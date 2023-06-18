@@ -40,7 +40,7 @@ export default function Catalog() {
     if (!filtersLoaded) dispatch(fetchFilters());
   }, [dispatch, filtersLoaded]);
 
-  if (!filtersLoaded) return <LoadingComponent message="Loading products..." />;
+  if (!filtersLoaded) return <LoadingComponent message="Ürünler Yükleniyor..." />;
 
   return (
     <Grid container columnSpacing={4}>
@@ -61,7 +61,7 @@ export default function Catalog() {
           sx={{ mb: 2, p: 2 }}
           className="bg-customBackground text-gray-200"
         >
-          <FormLabel sx={{ color: "white" }}>Brands</FormLabel>
+          <FormLabel sx={{ color: "white" }}>Markalar</FormLabel>
           <CheckboxButtons
             items={brands}
             checked={productParams.brands}
@@ -74,7 +74,7 @@ export default function Catalog() {
           sx={{ mb: 2, p: 2 }}
           className="bg-customBackground text-gray-200"
         >
-          <FormLabel sx={{ color: "white" }}>Types</FormLabel>
+          <FormLabel sx={{ color: "white" }}>Kategoriler</FormLabel>
           <CheckboxButtons
             items={types}
             checked={productParams.types}

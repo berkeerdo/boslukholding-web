@@ -7,7 +7,7 @@ import { useAppSelector } from "../../app/store/configureStore";
 export default function BasketPage() {
   const { basket } = useAppSelector((state) => state.basket);
 
-  if (basket?.items.length === 0)
+  if (basket?.items.length === 0 || !basket)
     return (
       <div className="flex items-center justify-center flex-col">
         <h1 className="text-2xl">Sepetinizde ürün bulunmamaktadır.</h1>

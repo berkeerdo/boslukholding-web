@@ -9,7 +9,12 @@ import {
 
 export default function ProductCardSkeleton() {
   return (
-    <Grid item xs component={Card}>
+    <Grid
+      item
+      xs
+      component={Card}
+      className="bg-customBackground text-gray-200"
+    >
       <CardHeader
         avatar={
           <Skeleton

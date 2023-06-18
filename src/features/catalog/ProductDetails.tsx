@@ -20,6 +20,7 @@ import {
 } from "../basket/basketSlice";
 import { fetchProductAsync, productSelectors } from "./catalogSlice";
 import { StyledTextField } from "../../app/components/StyledComponents/CustomTexfFieldStlyed";
+import { currencyFormat } from "../../app/utils/utils";
 
 export default function ProductDetails() {
   const { basket, status } = useAppSelector((state) => state.basket);
@@ -84,7 +85,7 @@ export default function ProductDetails() {
           <Typography variant="h3">{product.name}</Typography>
           <Divider sx={{ mb: 2, mt: 1 }} color="white" />
           <Typography variant="h4" className="text-primary">
-            ${(product.price / 100).toFixed(2)}
+            {currencyFormat(product.price)}
           </Typography>
           <TableContainer>
             <Table>
@@ -111,7 +112,7 @@ export default function ProductDetails() {
                 </TableRow>
                 <TableRow>
                   <TableCell sx={{ color: "white" }}>
-                    Quantity in stock
+                    Stok Miktarı
                   </TableCell>
                   <TableCell sx={{ color: "white" }}>
                     {product.quantityInStock}

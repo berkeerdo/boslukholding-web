@@ -17,14 +17,18 @@ import { addBasketItemAsync } from "../basket/basketSlice";
 
 interface Props {
   product: Product;
+  isHomePage?: boolean;
 }
 
-export default function ProductCard({ product }: Props) {
+export default function ProductCard({ product, isHomePage }: Props) {
   const { status } = useAppSelector((state) => state.basket);
   const dispatch = useAppDispatch();
 
   return (
-    <Card sx={{ maxWidth: 345 }} className="bg-customBackground text-gray-200">
+    <Card
+      sx={isHomePage ? { maxWidth: "100%" } : { maxWidth: 345 }}
+      className="bg-customBackground text-gray-200"
+    >
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "#FF6F00" }}>
