@@ -18,15 +18,27 @@ import { addBasketItemAsync } from "../basket/basketSlice";
 interface Props {
   product: Product;
   isHomePage?: boolean;
+  isDynamic?: boolean;
+  width?: number;
 }
 
-export default function ProductCard({ product, isHomePage }: Props) {
+export default function ProductCard({
+  product,
+  isHomePage,
+  isDynamic,
+  width,
+}: Props) {
   const { status } = useAppSelector((state) => state.basket);
   const dispatch = useAppDispatch();
 
   return (
     <Card
-      sx={isHomePage ? { maxWidth: "100%" } : { maxWidth: 345 }}
+      sx={
+        isHomePage
+          ? { maxWidth: "100%" }
+          : { maxWidth: 345 } || (isDynamic && { maxWidth: 200 })
+      }
+      style={{ width: width }}
       className="bg-customBackground text-gray-200"
     >
       <CardHeader

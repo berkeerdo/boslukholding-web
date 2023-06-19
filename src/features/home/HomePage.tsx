@@ -10,6 +10,7 @@ import {
 import ProductCard from "../catalog/ProductCard";
 import BrandCarousel from "../../app/components/ui/Slider";
 import ProductCardSkeleton from "../catalog/ProductCardSkeleton";
+import SuggestedProducts from "../../app/components/ui/SuggestedProducts";
 
 export default function HomePage() {
   const products = useAppSelector(productSelectors.selectAll);
@@ -36,18 +37,12 @@ export default function HomePage() {
           {!productsLoaded ? (
             <ProductCardSkeleton />
           ) : (
-            <ProductCard product={randomProduct} isHomePage />
+            <ProductCard product={randomProduct} />
           )}
         </Grid>
 
         <Grid item xs={12}>
-          <Card sx={{ height: 300 }}>
-            <CardMedia
-              component="img"
-              image="https://picsum.photos/1366/768"
-              alt="Rectangle"
-            />
-          </Card>
+          <SuggestedProducts products={products} />
         </Grid>
       </Grid>
 
