@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ImageSlider from "../../app/components/ui/ImageSlider";
 import { Card, CardMedia, Grid, Typography } from "@mui/material";
-import { useAppSelector } from "../../app/store/configureStore";
-import { productSelectors } from "../catalog/catalogSlice";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import {
+  fetchProductsAsync,
+  productSelectors,
+  setProductParams,
+} from "../catalog/catalogSlice";
 import ProductCard from "../catalog/ProductCard";
 import BrandCarousel from "../../app/components/ui/Slider";
+import ProductCardSkeleton from "../catalog/ProductCardSkeleton";
 
 export default function HomePage() {
   const products = useAppSelector(productSelectors.selectAll);
   const randomIndex = Math.floor(Math.random() * products.length);
   const randomProduct = products[randomIndex];
+  const { productsLoaded } = useAppSelector((state) => state.catalog);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setProductParams({ searchTerm: "" }));
+    dispatch(fetchProductsAsync());
+  }, [dispatch]);
 
   return (
     <>
@@ -21,7 +33,11 @@ export default function HomePage() {
           <Typography variant="h6" gutterBottom>
             Ürün Önerisi
           </Typography>
-          <ProductCard product={randomProduct} isHomePage />
+          {!productsLoaded ? (
+            <ProductCardSkeleton />
+          ) : (
+            <ProductCard product={randomProduct} isHomePage />
+          )}
         </Grid>
 
         <Grid item xs={12}>

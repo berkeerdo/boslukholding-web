@@ -13,6 +13,7 @@ import { FormLabel, Grid, Paper } from "@mui/material";
 import RadioButtonGroup from "../../app/components/ui/RadioButtonGroup";
 import CheckboxButtons from "../../app/components/ui/CheckboxButtons";
 import AppPagination from "../../app/components/ui/AppPagination";
+import { useLocation } from "react-router-dom";
 
 const sortOptions = [
   { value: "name", label: "Alphabetical" },
@@ -21,6 +22,8 @@ const sortOptions = [
 ];
 
 export default function Catalog() {
+  const location = useLocation();
+  const showFilters = location.state?.showFilters ?? true;
   const products = useAppSelector(productSelectors.selectAll);
   const {
     productsLoaded,
@@ -33,6 +36,11 @@ export default function Catalog() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(fetchProductsAsync());
+    dispatch(setProductParams({ searchTerm: "" }));
+  }, [dispatch, productParams.brands]);
+
+  useEffect(() => {
     if (!productsLoaded) dispatch(fetchProductsAsync());
   }, [dispatch, productsLoaded]);
 
@@ -43,54 +51,51 @@ export default function Catalog() {
   if (!filtersLoaded)
     return <LoadingComponent message="Ürünler Yükleniyor..." />;
 
-  console.log(
-    brands.map((brand) => (productParams.brands.includes(brand) ? brand : ""))
-  );
-
   return (
     <Grid container columnSpacing={4}>
-      <Grid item xs={3}>
-        <Paper
-          sx={{ mb: 2, p: 2 }}
-          className="bg-customBackground text-gray-200"
-        >
-          <RadioButtonGroup
-            selectedValue={productParams.orderBy}
-            options={sortOptions}
-            onChange={(e) =>
-              dispatch(setProductParams({ orderBy: e.target.value }))
-            }
-          />
-        </Paper>
-        <Paper
-          sx={{ mb: 2, p: 2 }}
-          className="bg-customBackground text-gray-200"
-        >
-          <FormLabel sx={{ color: "white" }}>Markalar</FormLabel>
-          <CheckboxButtons
-            items={brands}
-            checked={brands.map((brand) =>
-              productParams.brands.includes(brand) ? brand : ""
-            )}
-            onChange={(items: string[]) =>
-              dispatch(setProductParams({ brands: items }))
-            }
-          />
-        </Paper>
-        <Paper
-          sx={{ mb: 2, p: 2 }}
-          className="bg-customBackground text-gray-200"
-        >
-          <FormLabel sx={{ color: "white" }}>Kategoriler</FormLabel>
-          <CheckboxButtons
-            items={types}
-            checked={productParams.types}
-            onChange={(items: string[]) => {
-              dispatch(setProductParams({ types: items }));
-            }}
-          />
-        </Paper>
-      </Grid>
+      {showFilters && (
+        <Grid item xs={3}>
+          <Paper
+            sx={{ mb: 2, p: 2 }}
+            className="bg-customBackground text-gray-200"
+          >
+            <RadioButtonGroup
+              selectedValue={productParams.orderBy}
+              options={sortOptions}
+              onChange={(e) =>
+                dispatch(setProductParams({ orderBy: e.target.value }))
+              }
+            />
+          </Paper>
+          <Paper
+            sx={{ mb: 2, p: 2 }}
+            className="bg-customBackground text-gray-200"
+          >
+            <FormLabel sx={{ color: "white" }}>Markalar</FormLabel>
+            <CheckboxButtons
+              items={brands}
+              checked={productParams.brands}
+              onChange={(items: string[]) =>
+                dispatch(setProductParams({ brands: items }))
+              }
+            />
+          </Paper>
+          <Paper
+            sx={{ mb: 2, p: 2 }}
+            className="bg-customBackground text-gray-200"
+          >
+            <FormLabel sx={{ color: "white" }}>Kategoriler</FormLabel>
+            <CheckboxButtons
+              items={types}
+              checked={productParams.types}
+              onChange={(items: string[]) => {
+                dispatch(setProductParams({ types: items }));
+              }}
+            />
+          </Paper>
+        </Grid>
+      )}
+
       <Grid item xs={9} sx={{ mb: 2 }}>
         <ProductList products={products} />
       </Grid>

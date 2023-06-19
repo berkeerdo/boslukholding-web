@@ -14,12 +14,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function BrandCarousel() {
   const { brands } = useAppSelector((state) => state.catalog);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const brandSelect = (value: string) => {
-    navigate(`/products`);
-    dispatch(setProductParams({ searchTerm: value }));
+    navigate("/products", { state: { showFilters: true } });
+    dispatch(setProductParams({ brands: [value] })); // Bu satırı değiştirin
   };
 
   useEffect(() => {
