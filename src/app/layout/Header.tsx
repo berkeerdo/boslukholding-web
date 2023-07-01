@@ -47,7 +47,7 @@ const Header: React.FC = () => {
         className="lg:p-2 py-1"
       >
         <Toolbar className="flex justify-between">
-          <div className="flex items-center space-x-6">
+          <div className={`flex items-center space-x-6`}>
             <Link to="/">
               <Box
                 component="img"
@@ -70,31 +70,34 @@ const Header: React.FC = () => {
               <SearchBar />
             </div>
           )}
-          <div className="flex items-center space-x-6">
-            {user ? <SignedInMenu /> : <AccountMenu />}
-            <Button
-              variant="outlined"
-              component={Link}
-              to="/basket"
-              size="large"
-              className="space-x-2 uppercase"
-              sx={{
-                textTransform: "none",
-                borderColor: "#F8F8F8",
-                color: "#fff",
-                ":hover": {
+
+          {isMobile ? null : (
+            <div className="flex items-center space-x-6">
+              {user ? <SignedInMenu /> : <AccountMenu />}
+              <Button
+                variant="outlined"
+                component={Link}
+                to="/basket"
+                size="large"
+                className="space-x-2 uppercase"
+                sx={{
+                  textTransform: "none",
                   borderColor: "#F8F8F8",
-                  backgroundColor: "#F8F8F8",
-                  color: "#2D3142",
-                },
-              }}
-            >
-              <p>Sepetim</p>
-              <SmallBadge badgeContent={itemCount} color="error">
-                <RiShoppingCart2Fill className="mb-1" />
-              </SmallBadge>
-            </Button>
-          </div>
+                  color: "#fff",
+                  ":hover": {
+                    borderColor: "#F8F8F8",
+                    backgroundColor: "#F8F8F8",
+                    color: "#2D3142",
+                  },
+                }}
+              >
+                <p>Sepetim</p>
+                <SmallBadge badgeContent={itemCount} color="error">
+                  <RiShoppingCart2Fill className="mb-1" />
+                </SmallBadge>
+              </Button>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
 

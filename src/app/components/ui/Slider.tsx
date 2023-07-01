@@ -3,7 +3,7 @@ import { Autoplay, Navigation } from "swiper";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { Avatar } from "@mui/material";
+import { Avatar, useMediaQuery } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store/configureStore";
 import { useEffect } from "react";
 import {
@@ -18,6 +18,8 @@ export default function BrandCarousel() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const isMobile = useMediaQuery("(max-width: 768px)");
+
   const brandSelect = (value: string) => {
     navigate("/products", { state: { showFilters: true } });
     dispatch(setProductParams({ brands: [value] })); // Bu satırı değiştirin
@@ -31,7 +33,7 @@ export default function BrandCarousel() {
     <div className="w-full">
       <Swiper
         spaceBetween={16}
-        slidesPerView={5}
+        slidesPerView={isMobile ? 3 : 5}
         navigation
         rewind={true}
         loop={true}

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ImageSlider from "../../app/components/ui/ImageSlider";
-import { Card, CardMedia, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import {
   fetchProductsAsync,
@@ -20,7 +20,7 @@ export default function HomePage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(setProductParams({ searchTerm: "" }));
+    dispatch(setProductParams({ searchTerm: "", types: [], brands: [] }));
     dispatch(fetchProductsAsync());
   }, [dispatch]);
 

@@ -19,9 +19,14 @@ const SuggestedProducts = ({ products }: Props) => {
   const randomProducts = [];
   const numberOfRandomProducts = 5;
 
+  const availableProducts = [...products];
+
   for (let i = 0; i < numberOfRandomProducts; i++) {
-    const randomIndex = Math.floor(Math.random() * products.length);
-    const randomProduct = products[randomIndex];
+    const randomIndex = Math.floor(Math.random() * availableProducts.length);
+    const randomProduct = availableProducts[randomIndex];
+
+    availableProducts.splice(randomIndex, 1);
+
     randomProducts.push(randomProduct);
   }
 

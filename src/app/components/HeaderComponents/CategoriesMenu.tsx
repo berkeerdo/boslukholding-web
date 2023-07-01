@@ -2,19 +2,22 @@ import { Menu, MenuItem, useMediaQuery, useTheme } from "@mui/material";
 import React from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import CustomButton from "../ui/CustomButton";
+import { useAppDispatch, useAppSelector } from "../../store/configureStore";
+import { setProductParams } from "../../../features/catalog/catalogSlice";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   toggleDrawer: () => void;
 }
 
 const CategoriesMenu = ({ toggleDrawer }: Props) => {
+  const { types } = useAppSelector((state) => state.catalog);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [anchorCategories, setAnchorCategories] =
-    React.useState<null | HTMLElement>(null);
-
-  const [anchorSubCategory, setAnchorSubCategory] =
     React.useState<null | HTMLElement>(null);
 
   const handleCategoriesMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -25,24 +28,10 @@ const CategoriesMenu = ({ toggleDrawer }: Props) => {
     setAnchorCategories(null);
   };
 
-  const handleSubCategoryMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorSubCategory(event.currentTarget);
+  const handleClickCategory = (value: string) => {
+    navigate("/products", { state: { showFilters: true } });
+    dispatch(setProductParams({ types: [value] }));
   };
-
-  const handleSubCategoryMenuClose = () => {
-    setAnchorSubCategory(null);
-  };
-
-  const categories = [
-    {
-      label: "Kategori 1",
-      subCategories: ["Alt Kategori 1", "Alt Kategori 2", "Alt Kategori 3"],
-    },
-    {
-      label: "Kategori 2",
-      subCategories: ["Alt Kategori 4", "Alt Kategori 5", "Alt Kategori 6"],
-    },
-  ];
 
   return (
     <>
@@ -71,37 +60,24 @@ const CategoriesMenu = ({ toggleDrawer }: Props) => {
           horizontal: "left",
         }}
       >
-        {categories.map((category, index) => [
+        {types.map((type, index) => [
           <MenuItem
             key={`menu-item-${index}`}
-            onClick={handleSubCategoryMenuOpen}
+            onClick={() => handleClickCategory(type)}
             aria-haspopup="true"
-            aria-controls={`sub-category-menu-${index}`}
           >
-            {category.label}
+            {type}
           </MenuItem>,
-          <Menu
-            key={`menu-${index}`}
-            id={`sub-category-menu-${index}`}
-            className="ml-1"
-            anchorEl={anchorSubCategory}
-            open={Boolean(anchorSubCategory)}
-            onClose={handleSubCategoryMenuClose}
-            onAbort={handleSubCategoryMenuClose}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-          >
-            {category.subCategories.map((subCategory, subIndex) => (
-              <MenuItem key={subIndex}>{subCategory}</MenuItem>
-            ))}
-          </Menu>,
         ])}
+        <MenuItem
+          onClick={() => {
+            navigate("/products", { state: { showFilters: true } });
+            dispatch(setProductParams({ types: [] }));
+          }}
+          aria-haspopup="true"
+        >
+          Tüm Ürünler
+        </MenuItem>
       </Menu>
     </>
   );

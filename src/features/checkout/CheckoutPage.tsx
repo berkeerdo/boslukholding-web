@@ -15,8 +15,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { validationSchema } from "./checkoutValidation";
 import { LoadingButton } from "@mui/lab";
 import agent from "../../app/api/agent";
-import { useAppDispatch } from "../../app/store/configureStore";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
 import { clearBasket } from "../basket/basketSlice";
+import { useNavigate } from "react-router-dom";
+import CustomButton from "../../app/components/ui/CustomButton";
 
 const steps = ["Kargo Adresi", "Sipariş Önizlemesi", "Ödeme Detayları"];
 
@@ -71,6 +73,27 @@ export default function CheckoutPage() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  const user = useAppSelector((state) => state.account.user);
+  const navigate = useNavigate();
+
+  if (!user)
+    return (
+      <div className="container mx-auto my-3 md:my-6 p-2 md:p-3 bg-customBackground rounded-xl shadow-2xl">
+        <Typography component="h1" variant="h4" align="center">
+          Sipariş vermek için giriş yapmalısınız.
+        </Typography>
+        <div className="flex justify-center mt-4">
+          <CustomButton
+            variant="contained"
+            color="primary"
+            onClick={() => navigate("/login")}
+          >
+            Giriş Yap
+          </CustomButton>
+        </div>
+      </div>
+    );
 
   return (
     <FormProvider {...methods}>
