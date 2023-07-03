@@ -9,6 +9,8 @@ import Register from "../../features/account/Register";
 import AboutPage from "../../features/about/AboutPage";
 import Catalog from "../../features/catalog/Catalog";
 import ProductDetails from "../../features/catalog/ProductDetails";
+import ProfilePage from "../../features/profile/ProfilePage";
+import UpdateProfile from "../../features/profile/UpdateProfile";
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +65,14 @@ export const router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
+      },
+      {
+        path: "profile/update",
+        element: <UpdateProfile />,
       },
       {
         path: "*",

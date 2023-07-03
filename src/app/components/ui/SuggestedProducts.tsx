@@ -6,6 +6,8 @@ import "swiper/css/scrollbar";
 import { Product } from "../../models/product";
 import ProductCard from "../../../features/catalog/ProductCard";
 import { Typography, useMediaQuery, useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
+import ProductCardSkeleton from "../../../features/catalog/ProductCardSkeleton";
 
 interface Props {
   products: Product[];
@@ -15,20 +17,31 @@ const SuggestedProducts = ({ products }: Props) => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
   const isMediumScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
+  const [randomProducts, setRandomProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const skeletonItems = [1, 2, 3];
 
-  const randomProducts = [];
-  const numberOfRandomProducts = 5;
+  useEffect(() => {
+    const numberOfRandomProducts = 5;
 
-  const availableProducts = [...products];
+    const availableProducts = [...products];
+    const timeout = setTimeout(() => {
+      for (let i = 0; i < numberOfRandomProducts; i++) {
+        const randomIndex = Math.floor(
+          Math.random() * availableProducts.length
+        );
+        const randomProduct = availableProducts[randomIndex];
 
-  for (let i = 0; i < numberOfRandomProducts; i++) {
-    const randomIndex = Math.floor(Math.random() * availableProducts.length);
-    const randomProduct = availableProducts[randomIndex];
+        availableProducts.splice(randomIndex, 1);
 
-    availableProducts.splice(randomIndex, 1);
+        setRandomProducts((prev) => [...prev, randomProduct]);
+      }
 
-    randomProducts.push(randomProduct);
-  }
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [products]);
 
   return (
     <>
@@ -45,11 +58,21 @@ const SuggestedProducts = ({ products }: Props) => {
         autoplay={true}
         style={{ maxWidth: "100%" }}
       >
-        {randomProducts.map((randomProduct) => (
-          <SwiperSlide key={randomProduct.id}>
-            <ProductCard product={randomProduct} isDynamic />
-          </SwiperSlide>
-        ))}
+        {isLoading ? (
+          <>
+            {skeletonItems.map((item) => (
+              <SwiperSlide key={item}>
+                <ProductCardSkeleton />
+              </SwiperSlide>
+            ))}
+          </>
+        ) : (
+          randomProducts.map((randomProduct) => (
+            <SwiperSlide key={randomProduct.id}>
+              <ProductCard product={randomProduct} isDynamic />
+            </SwiperSlide>
+          ))
+        )}
       </Swiper>
     </>
   );

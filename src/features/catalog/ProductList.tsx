@@ -14,7 +14,7 @@ export default function ProductList(props: Props) {
   return (
     <Grid container spacing={4}>
       {props.products.map((product) => (
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           {!productsLoaded ? (
             <ProductCardSkeleton />
           ) : (

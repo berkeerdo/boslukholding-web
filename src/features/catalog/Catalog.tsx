@@ -54,7 +54,7 @@ export default function Catalog() {
   return (
     <Grid container columnSpacing={4}>
       {showFilters && (
-        <Grid item xs={3}>
+        <Grid item xs={5} md={3}>
           <Paper
             sx={{ mb: 2, p: 2 }}
             className="bg-customBackground text-gray-200"
@@ -96,7 +96,7 @@ export default function Catalog() {
         </Grid>
       )}
 
-      <Grid item xs={9} sx={{ mb: 2 }}>
+      <Grid item xs={7} md={9} sx={{ mb: 2 }}>
         <ProductList products={products} />
       </Grid>
       <Grid item xs={3} />

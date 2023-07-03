@@ -70,9 +70,6 @@ const AccountMenu = () => {
           >
             <ListItemText>Siparişlerim</ListItemText>
           </MenuItem>
-          <MenuItem onClick={handleAccountMenuClose}>
-            <ListItemText>Üyelik Bilgilerim</ListItemText>
-          </MenuItem>
         </MenuList>
       </Menu>
     </>

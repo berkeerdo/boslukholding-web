@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ImageSlider from "../../app/components/ui/ImageSlider";
 import { Grid, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
@@ -14,15 +14,46 @@ import SuggestedProducts from "../../app/components/ui/SuggestedProducts";
 
 export default function HomePage() {
   const products = useAppSelector(productSelectors.selectAll);
-  const randomIndex = Math.floor(Math.random() * products.length);
-  const randomProduct = products[randomIndex];
-  const { productsLoaded } = useAppSelector((state) => state.catalog);
+  const [currentProductIndex, setCurrentProductIndex] = useState(0);
+  const currentProduct = products[currentProductIndex];
+  const [showSkeleton, setShowSkeleton] = useState(true);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(setProductParams({ searchTerm: "", types: [], brands: [] }));
     dispatch(fetchProductsAsync());
-  }, [dispatch]);
+
+    const timer = setTimeout(() => {
+      setCurrentProductIndex((prevIndex) => {
+        const nextIndex = prevIndex + 1 >= products.length ? 0 : prevIndex + 1;
+        return nextIndex;
+      });
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [dispatch, products.length]);
+
+  useEffect(() => {
+    const showSkeletonTimer = setTimeout(() => {
+      setShowSkeleton(true);
+    }, 1000);
+
+    return () => {
+      clearTimeout(showSkeletonTimer);
+    };
+  }, [currentProduct]);
+
+  useEffect(() => {
+    const showProductTimer = setTimeout(() => {
+      setShowSkeleton(false);
+    }, 1000);
+    return () => {
+      clearTimeout(showProductTimer);
+    };
+  }, [currentProduct]);
 
   return (
     <>
@@ -34,10 +65,10 @@ export default function HomePage() {
           <Typography variant="h6" gutterBottom>
             Ürün Önerisi
           </Typography>
-          {!productsLoaded ? (
+          {showSkeleton ? (
             <ProductCardSkeleton />
           ) : (
-            <ProductCard product={randomProduct} />
+            <ProductCard product={currentProduct} />
           )}
         </Grid>
 

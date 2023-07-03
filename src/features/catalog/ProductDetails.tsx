@@ -73,14 +73,14 @@ export default function ProductDetails() {
 
   return (
     <Grid container spacing={6}>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <img
           src={product.pictureUrl}
           alt={product.name}
           style={{ width: "100%" }}
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <div className="bg-customBackground p-5 shadow-xl rounded-xl">
           <Typography variant="h3">{product.name}</Typography>
           <Divider sx={{ mb: 2, mt: 1 }} color="white" />
@@ -111,9 +111,7 @@ export default function ProductDetails() {
                   <TableCell sx={{ color: "white" }}>{product.brand}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell sx={{ color: "white" }}>
-                    Stok Miktarı
-                  </TableCell>
+                  <TableCell sx={{ color: "white" }}>Stok Miktarı</TableCell>
                   <TableCell sx={{ color: "white" }}>
                     {product.quantityInStock}
                   </TableCell>
