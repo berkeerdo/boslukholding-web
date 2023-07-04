@@ -8,10 +8,10 @@ export default function UpdateProfile() {
         Profilinizi Güncelleyin
       </Typography>
       <div className="flex justify-center mt-4">
-        <Card sx={{ maxWidth: 500 }}>
+        <Card sx={{ maxWidth: 500 }} className="bg-gray-700">
           <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Email ve Kullanıcı Adı Değiştir
+            <Typography variant="h6" gutterBottom className="text-gray-200">
+              Email Değiştir
             </Typography>
             <UpdateForm />
           </CardContent>

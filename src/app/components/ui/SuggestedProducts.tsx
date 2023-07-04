@@ -38,7 +38,7 @@ const SuggestedProducts = ({ products }: Props) => {
       }
 
       setIsLoading(false);
-    }, 1000);
+    }, 1500);
 
     return () => clearTimeout(timeout);
   }, [products]);

@@ -6,13 +6,21 @@ import { router } from "../../app/router/Routes";
 import { setBasket } from "../basket/basketSlice";
 import { store } from "../../app/store/configureStore";
 import { showSnackbar } from "../../app/components/Snackbar/snackBarSlice";
+import { SavedAdress } from "../../app/models/address";
+import { UpdateUserDto } from "../../app/models/updateuser";
 
 interface AccountState {
   user: User | null;
+  updateUserDto: UpdateUserDto | null;
+  savedAdress: SavedAdress | null;
+  status: string;
 }
 
 const initialState: AccountState = {
   user: null,
+  updateUserDto: null,
+  savedAdress: null,
+  status: "idle",
 };
 
 export const signInUser = createAsyncThunk<User, FieldValues>(
@@ -51,6 +59,33 @@ export const fetchCurrentUser = createAsyncThunk<User>(
   }
 );
 
+export const fetchSavedAddress = createAsyncThunk<SavedAdress>(
+  "account/fetchSavedAddress",
+  async (_, thunkAPI) => {
+    try {
+      const address = await agent.Account.savedAdress();
+      return address;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
+export const updateUser = createAsyncThunk<User, UpdateUserDto>(
+  "account/updateUser",
+  async (data, thunkAPI) => {
+    try {
+      const userDto = await agent.Account.updateProfile(data);
+      const { basket, ...user } = userDto;
+      if (basket) thunkAPI.dispatch(setBasket(basket));
+      localStorage.setItem("user", JSON.stringify(user));
+      return user;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({ error: error.message });
+    }
+  }
+);
+
 export const accountSlice = createSlice({
   name: "account",
   initialState,
@@ -73,10 +108,33 @@ export const accountSlice = createSlice({
       );
       router.navigate("/");
     });
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      state.user = action.payload;
+      state.status = "idle";
+    });
+    builder.addCase(updateUser.pending, (state) => {
+      state.status = "updating";
+    });
+    builder.addCase(updateUser.rejected, (state) => {
+      state.status = "idle";
+      console.log("error");
+    });
+    builder.addCase(fetchSavedAddress.fulfilled, (state, action) => {
+      state.savedAdress = action.payload;
+      state.status = "idle";
+    });
+    builder.addCase(fetchSavedAddress.pending, (state) => {
+      state.status = "fetchingAdress";
+    });
+    builder.addCase(fetchSavedAddress.rejected, (state) => {
+      state.savedAdress = null;
+      state.status = "idle";
+    });
     builder.addMatcher(
       isAnyOf(signInUser.fulfilled, fetchCurrentUser.fulfilled),
       (state, action) => {
         state.user = action.payload;
+        setUser(action.payload);
       }
     );
     builder.addMatcher(isAnyOf(signInUser.rejected), (state, action) => {

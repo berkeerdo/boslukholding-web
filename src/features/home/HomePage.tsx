@@ -29,7 +29,7 @@ export default function HomePage() {
         const nextIndex = prevIndex + 1 >= products.length ? 0 : prevIndex + 1;
         return nextIndex;
       });
-    }, 1000);
+    }, 1500);
 
     return () => {
       clearTimeout(timer);
@@ -39,7 +39,7 @@ export default function HomePage() {
   useEffect(() => {
     const showSkeletonTimer = setTimeout(() => {
       setShowSkeleton(true);
-    }, 1000);
+    }, 1500);
 
     return () => {
       clearTimeout(showSkeletonTimer);
@@ -49,7 +49,7 @@ export default function HomePage() {
   useEffect(() => {
     const showProductTimer = setTimeout(() => {
       setShowSkeleton(false);
-    }, 1000);
+    }, 1500);
     return () => {
       clearTimeout(showProductTimer);
     };

@@ -31,7 +31,7 @@ export default function SignedInMenu() {
         aria-controls="account-menu"
       >
         <div className="flex flex-col items-center justify-center">
-          <p>{user?.username}</p>
+          <p>{user?.email}</p>
           <span className="text-xs text-gray-300/90 ">Hesap Ayarları</span>
         </div>
       </CustomButton>
