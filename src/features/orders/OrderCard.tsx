@@ -22,7 +22,7 @@ const OrdersComponent: React.FC<Props> = ({ orders }) => {
         Siparişlerim
       </Typography>
       <Grid container spacing={2}>
-        {orders.map((order: Order) => (
+        {orders.map((order: Order, index) => (
           <Grid item xs={12} key={order.id} className="text-customBackground">
             <div className="bg-customButtonBackground shadow-xl rounded-xl p-5">
               <Typography variant="h6" gutterBottom className="font-semibold">
@@ -38,31 +38,29 @@ const OrdersComponent: React.FC<Props> = ({ orders }) => {
                 </AccordionSummary>
                 <AccordionDetails className="bg-customBackground shadow-xl rounded-xl p-5">
                   <Grid container spacing={2}>
-                    {orders.map((order, index: number) => (
-                      <Grid item xs={12} key={order.id}>
-                        <div className="flex items-center">
-                          <img
-                            src={order.orderItems[0].pictureUrl}
-                            alt={order.id.toString()}
-                            className="w-20 h-20 mr-4 rounded-3xl"
-                          />
-                          <div className="flex flex-col">
-                            <Typography variant="body1" className="text-white">
-                              {order.orderItems[0].name}
-                            </Typography>
-                            <Typography variant="body1" className="text-white">
-                              Adet: {order.orderItems.length}
-                            </Typography>
-                            <Typography variant="body1" className="text-white">
-                              Fiyat: {currencyFormat(order.total)}
-                            </Typography>
-                          </div>
+                    <Grid item xs={12} key={order.id}>
+                      <div className="flex items-center">
+                        <img
+                          src={order.orderItems[0].pictureUrl}
+                          alt={order.id.toString()}
+                          className="w-20 h-20 mr-4 rounded-3xl"
+                        />
+                        <div className="flex flex-col">
+                          <Typography variant="body1" className="text-white">
+                            {order.orderItems[0].name}
+                          </Typography>
+                          <Typography variant="body1" className="text-white">
+                            Adet: {order.orderItems.length}
+                          </Typography>
+                          <Typography variant="body1" className="text-white">
+                            Fiyat: {currencyFormat(order.total)}
+                          </Typography>
                         </div>
-                        {index !== order.orderItems.length - 1 && (
-                          <Divider color="white" className="my-2" />
-                        )}
-                      </Grid>
-                    ))}
+                      </div>
+                      {index !== order.orderItems.length - 1 && (
+                        <Divider color="white" className="my-2" />
+                      )}
+                    </Grid>
                   </Grid>
                 </AccordionDetails>
               </Accordion>

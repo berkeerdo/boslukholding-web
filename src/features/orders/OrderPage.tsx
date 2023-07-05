@@ -22,6 +22,8 @@ export default function OrderPage() {
       .finally(() => setLoading(false));
   }, []);
 
+  console.log(orders);
+
   if (!user)
     return (
       <div className="container mx-auto my-3 md:my-6 p-2 md:p-3 bg-customBackground rounded-xl shadow-2xl">
